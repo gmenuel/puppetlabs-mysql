@@ -105,7 +105,7 @@ define mysql::db (
     password_hash => Deferred('mysql::password', [$password]),
     tls_options   => $tls_options,
   }
-  ensure_resource('mysql_user', "${user}@${host}", $user_resource)
+  Deferred('ensure_resource', ['mysql_user', "${user}@${host}", $user_resource])
 
   if $ensure == 'present' {
     $table = "${dbname}.*"
